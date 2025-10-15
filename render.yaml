@@ -1,0 +1,36 @@
+services:
+  # Backend API (.NET)
+  - type: web
+    name: coco-march-api
+    runtime: dotnet
+    rootDir: backend
+    buildCommand: dotnet publish -c Release -o out
+    startCommand: dotnet out/ProductCrudApi.dll
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://0.0.0.0:$PORT
+      - key: MongoDbSettings__ConnectionString
+        sync: false
+      - key: MongoDbSettings__DatabaseName
+        value: CocoMarchDB
+      - key: MongoDbSettings__ProductsCollectionName
+        value: products
+      - key: AllowedOrigins
+        sync: false
+
+  # Frontend (React)
+  - type: web
+    name: coco-march-frontend
+    runtime: static
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: ./client/build
+    envVars:
+      - key: REACT_APP_API_URL
+        sync: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
