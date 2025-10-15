@@ -2,10 +2,8 @@ services:
   # Backend API (.NET)
   - type: web
     name: coco-march-api
-    runtime: dotnet
-    rootDir: backend
-    buildCommand: dotnet publish -c Release -o out
-    startCommand: dotnet out/ProductCrudApi.dll
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
