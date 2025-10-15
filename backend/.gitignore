@@ -1,0 +1,8 @@
+# Build results
+bin/
+obj/
+
+
+# Application settings with sensitive data
+appsettings.Development.json
+appsettings.Production.json
